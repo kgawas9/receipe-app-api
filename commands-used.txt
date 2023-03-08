@@ -1,0 +1,8 @@
+docker-compose build -> to build the docker file
+docker-compose down -> to clear the containers
+
+docker-compose up ->
+
+
+- to create an app
+docker-compose run --rm app sh -c "python manage.py startapp core"
