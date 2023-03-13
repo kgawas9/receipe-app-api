@@ -4,10 +4,23 @@ Tests for models.
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
-from core.management.commands import wait_for_db
 
 class TModelTest(TestCase):
     """Test models."""
+
+    def test_new_user_email_normalized(self):
+        """Test email is normalized for email."""
+
+        sample_emails = [
+            ['test1@EXAMPLE.com', 'test1@example.com'],
+            ['Test2@EXAMPLE.com', 'Test2@example.com'],
+            ['TEST3@EXAMPLE.COM', 'TEST3@example.com'],
+            ['test4@example.COM', 'test4@example.com'],
+        ]
+
+        for email, expected in sample_emails:
+            user = get_user_model().objects.create_user(email, 'sample123')
+            self.assertEqual(user.email, expected)
 
     def test_create_with_email_successful(self):
         """Test creating a user with an email is successful"""
