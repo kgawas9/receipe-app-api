@@ -24,7 +24,7 @@ def create_user(email='user@example.com', password='TestPass123'):
 class PublicTagsAPITest(TestCase):
     """Test unathenticated API requests."""
 
-    def SetUp(self):
+    def setUp(self):
         self.client = APIClient()
 
     def test_auth_required(self):
@@ -37,17 +37,14 @@ class PublicTagsAPITest(TestCase):
 class PrivateTagsAPITest(TestCase):
     """Test authenticated API request on Tags."""
 
-    def SetUp(self):
-        self.user = get_user_model().objects.create_user(
-            'user@example.com',
-            'TestPass123'
-        )
+    def setUp(self):
         self.client = APIClient()
+        self.user = create_user()
         self.client.force_authenticate(self.user)
 
     def test_retrieve_tags(self):
         """Test retrieving list of tags."""
-        Tag.objects.create(user=self.user, name='Vegan')
+        Tag.objects.create(user=self.user, name="Vegan")
         Tag.objects.create(user=self.user, name='Dessert')
 
         res = self.client.get(TAGS_URL)
