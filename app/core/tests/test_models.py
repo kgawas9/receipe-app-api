@@ -83,7 +83,6 @@ class TModelTest(TestCase):
 
         self.assertEqual(str(tag), tag.name)
 
-
     def test_create_ingredient(self):
         """Test creating ingredients successful."""
         user = create_user()
