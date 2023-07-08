@@ -62,6 +62,9 @@ class Recipe(models.Model):
     # added post creation of tag model/class
     tags = models.ManyToManyField('Tag')
 
+    # added post defining Ingredient class
+    ingredient = models.ManyToManyField('Ingredient')
+
     def __str__(self):
         """String representation of recipe class."""
         return self.title
@@ -69,6 +72,17 @@ class Recipe(models.Model):
 
 class Tag(models.Model):
     """Tag for filtering recipes."""
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Ingredient(models.Model):
     name = models.CharField(max_length=255)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
